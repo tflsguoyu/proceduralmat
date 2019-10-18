@@ -64,3 +64,18 @@ def invTransVar(y, a, b):
 def invTransVarGrad(y, a, b):
 	return (b-a) * invLogit(y) * (1- invLogit(y))
 
+def KL_div(a, b):
+    assert(np.shape(a) == np.shape(b))
+    h,w = np.shape(a)
+    kl_div = 0
+    epsilon = 0.000001
+    for i in range(h):
+        for j in range(w):
+            kl_div += a[i,j] * np.log(max(epsilon,a[i,j]) / max(epsilon,b[i,j]))
+    return kl_div
+
+def normTo01(x, a, b):
+    return (x-a)/(b-a)
+
+def normTo01_inv(x, a, b):
+    return x*(b-a)+a
