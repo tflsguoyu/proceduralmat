@@ -2,6 +2,8 @@ import numpy as np
 import torch as th
 from utility import *
 
+from torchvision.models.vgg import vgg19_bn
+
 class Bins:
     def __init__(self, target, imsize, device):
         print("Initial Class sumfunc::Bins()")
@@ -84,3 +86,59 @@ class Bins:
                 (np.sqrt(2*np.pi)*binFFTSigma).log()).sum()
 
         return lpdf
+
+
+
+
+
+
+class TextureDescriptor(th.nn.Module):
+
+    def __init__(self, target, device):
+        super(TextureDescriptor, self).__init__()
+        self.device = device
+        self.target = th.from_numpy(target).float().to(device)
+
+        # get VGG19 feature network in evaluation mode
+        self.net = vgg19_bn(True).features.to(device).eval()
+
+        self.outputs = []
+        def hook(module, input, output):
+            self.outputs.append(output)
+
+        for i in [6, 13, 26, 39]:
+            self.net[i].register_forward_hook(hook)
+
+        # weight proportional to num. of feature channels [Aittala 2016]
+        self.weights = [1, 2, 4, 8, 8]
+
+        self.loss = th.nn.L1Loss()
+        tmp = self.floatToTd(self.target)
+        self.td_target = self.forward(tmp)
+
+    def floatToTd(self, img):
+        return img.pow(1/2.2).permute(2,0,1).unsqueeze(0) *255-128
+
+    def forward(self, x):
+        # run VGG features
+        self.outputs = []
+        x = self.net(x)
+        self.outputs.append(x)
+
+        result = []
+        for i, F in enumerate(self.outputs):
+            F = F.squeeze()
+            f, s1, s2 = F.shape
+            s = s1 * s2
+            F = F.view((f, s))
+
+            # Gram matrix
+            G = th.mm(F, F.t()) / s
+            result.append(G.flatten() * self.weights[i])
+
+        return th.cat(result)
+
+    def logpdf(self, img):
+        tmp = self.floatToTd(img)
+        td_this = self.forward(tmp)
+        return self.loss(td_this, self.td_target)
