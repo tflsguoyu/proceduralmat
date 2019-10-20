@@ -45,25 +45,12 @@ class HMC:
     
     def dU(self, x):
         self.U(x)
-        # print(self.lpdf)
         self.lpdf.backward()
-        # return [self.forwardObj.light.grad.item(), \
-        #         self.forwardObj.albedo[0].grad.item(), \
-        #         self.forwardObj.albedo[1].grad.item(), \
-        #         self.forwardObj.albedo[2].grad.item(), \
-        #         self.forwardObj.rough.grad.item(), \
-        #         self.forwardObj.fsigma.grad.item(), \
-        #         self.forwardObj.fscale.grad.item(), \
-        #         self.forwardObj.iSigma.grad.item()]
-        # return np.array([self.forwardObj.fsigma.grad.item(), \
-        #                  self.forwardObj.fscale.grad.item()])
 
         U_grad = np.zeros(len(self.paraIdx))
         for k, idx in enumerate(self.paraIdx):
             U_grad[k] = self.forwardObj.para.grad[idx].item()   
         return U_grad
-
-        # return np.array([self.forwardObj.rough_zip.grad.item()])
 
     def K(self, p): return 0.5* np.dot(p,p)
 
@@ -95,7 +82,8 @@ class HMC:
             else:
                 self.num_reject += 1
         
-        self.xs = np.vstack(self.xs)        
+        self.xs = np.vstack(self.xs)
+        self.lpdfs = np.vstack(self.lpdfs)        
 
 # class HMCBump(HMC):
 #     def __init__(self, target, forwardObj, N):

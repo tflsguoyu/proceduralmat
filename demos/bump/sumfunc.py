@@ -1,8 +1,8 @@
 import numpy as np
 import torch as th
 from utility import *
-
-from torchvision.models.vgg import vgg19_bn
+from descriptor import *
+from torchvision.transforms import Normalize, Compose
 
 class Bins:
     def __init__(self, target, imsize, device):
@@ -10,7 +10,7 @@ class Bins:
         self.imsize = imsize
         self.device = device
         self.imres = target.shape[0]
-        self.target = th.from_numpy(target).float().to(device)
+        self.target = th.from_numpy(target).to(device)
         
         self.useFFTimg = True
         self.initBinsR([16,0, 8,1])
@@ -92,53 +92,29 @@ class Bins:
 
 
 
-class TextureDescriptor(th.nn.Module):
-
+class T_G:
     def __init__(self, target, device):
-        super(TextureDescriptor, self).__init__()
         self.device = device
-        self.target = th.from_numpy(target).float().to(device)
+        self.transform = Compose([Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])]) 
 
-        # get VGG19 feature network in evaluation mode
-        self.net = vgg19_bn(True).features.to(device).eval()
+        self.td = TextureDescriptor(device)
+        # freeze the weights of td
+        for p in self.td.parameters():
+            p.requires_grad = False
 
-        self.outputs = []
-        def hook(module, input, output):
-            self.outputs.append(output)
+        target = th.from_numpy(target).to(device)
 
-        for i in [6, 13, 26, 39]:
-            self.net[i].register_forward_hook(hook)
+        self.td_target = self.td(self.hdr2ldr(target))
+        self.td_target.requires_grad = False
 
-        # weight proportional to num. of feature channels [Aittala 2016]
-        self.weights = [1, 2, 4, 8, 8]
-
-        self.loss = th.nn.L1Loss()
-        tmp = self.floatToTd(self.target)
-        self.td_target = self.forward(tmp)
-
-    def floatToTd(self, img):
-        return img.pow(1/2.2).permute(2,0,1).unsqueeze(0) *255-128
-
-    def forward(self, x):
-        # run VGG features
-        self.outputs = []
-        x = self.net(x)
-        self.outputs.append(x)
-
-        result = []
-        for i, F in enumerate(self.outputs):
-            F = F.squeeze()
-            f, s1, s2 = F.shape
-            s = s1 * s2
-            F = F.view((f, s))
-
-            # Gram matrix
-            G = th.mm(F, F.t()) / s
-            result.append(G.flatten() * self.weights[i])
-
-        return th.cat(result)
+    def hdr2ldr(self, img):
+        return self.transform(img.clamp(0,1).pow(1/2.2).permute(2,0,1))
 
     def logpdf(self, img):
-        tmp = self.floatToTd(img)
-        td_this = self.forward(tmp)
-        return self.loss(td_this, self.td_target)
+        td_this = self.td(self.hdr2ldr(img))
+
+        sigma = th.max(0.2 * self.td_target, th.tensor(0.01,device=self.device))
+        lpdf = ((td_this - self.td_target).pow(2.0)/(2.0*sigma.pow(2.0)) + \
+                (np.sqrt(2*np.pi)*sigma).log()).mean()
+
+        return lpdf

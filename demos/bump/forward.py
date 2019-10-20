@@ -12,16 +12,6 @@ def paraZip(light, albedo, rough, fsigma, fscale, iSigma):
 
 	return [light, albedo[0], albedo[1], albedo[2], rough, fsigma, fscale, iSigma]
 
-# def paraUnzip(light_zip, albedo_zip, rough_zip, fsigma_zip, fscale_zip, iSigma_zip):
-# 	light  = normTo01_inv(light_zip,  0, 1000)
-# 	albedo = normTo01_inv(albedo_zip, 0,    1)
-# 	rough  = normTo01_inv(rough_zip,  0,    1)
-# 	fsigma = normTo01_inv(fsigma_zip, 0,   10)
-# 	fscale = normTo01_inv(fscale_zip, 0,  0.1)
-# 	iSigma = normTo01_inv(iSigma_zip, 0,   10)
-
-# 	return light, albedo, rough, fsigma, fscale, iSigma
-
 def paraUnzip(para):
 	light  = normTo01_inv(para[0],   0, 1000)
 	albedo = normTo01_inv(para[1:4], 0,    1)
@@ -101,20 +91,6 @@ class Mfb:
 
 		self.para = th.tensor(para, dtype=th.float32, device=self.device, requires_grad=True)
 		light, albedo, rough, fsigma, fscale, iSigma = paraUnzip(self.para)
-
-		# self.para = th.tensor(para, dtype=th.float32, device=self.device)
-		# self.para = th.autograd.Variable(self.para, requires_grad=True)
-		# light, albedo, rough, fsigma, fscale, iSigma = paraUnzip(self.para)
-		
-		# self.light_zip  = th.tensor(para[0], dtype=th.float32, device=self.device, requires_grad=True)
-		# self.albedo_zip = th.tensor([para[1],para[2],para[3]], dtype=th.float32, device=self.device, requires_grad=True)
-		# self.rough_zip  = th.tensor(para[4], dtype=th.float32, device=self.device, requires_grad=True)
-		# self.fsigma_zip = th.tensor(para[5], dtype=th.float32, device=self.device, requires_grad=True)
-		# self.fscale_zip = th.tensor(para[6], dtype=th.float32, device=self.device, requires_grad=True)
-		# self.iSigma_zip = th.tensor(para[7], dtype=th.float32, device=self.device, requires_grad=True)
-
-		# light, albedo, rough, fsigma, fscale, iSigma = \
-		# 	paraUnzip(self.light_zip, self.albedo_zip, self.rough_zip, self.fsigma_zip, self.fscale_zip, self.iSigma_zip)
 		
 		light = light.clamp(min=0)
 		albedo = albedo.clamp(0,1)
@@ -140,4 +116,4 @@ class Mfb:
 
 		img = (diffuse + specular) * th.stack([tmp, tmp, tmp], 2)
 		
-		return img.clamp(0, 1)
+		return img
