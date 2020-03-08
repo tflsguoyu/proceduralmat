@@ -27,7 +27,7 @@ for i in range(imRes):
             diff[i,j,0] = (dist[i,j+1] - dist[i,j])   / (  pixelUnit)
         elif j == imRes-1:
             diff[i,j,0] = (dist[i,j]   - dist[i,j-1]) / (  pixelUnit)
-                
+
         if i > 0 and i < imRes-1:
             diff[i,j,1] = (dist[i+1,j] - dist[i-1,j]) / (2*pixelUnit)
         elif i == 0:
@@ -40,24 +40,24 @@ exr.write(diff[:,:,1], fn+'_diffy.exr')
 
 # step size
 delta = 0.01
-nSamples = 100000
+nSamples = 1e5
 L = 5
-epsilon = 0.000001
-    
+epsilon = 1e-6
+
 # func
-def U(x): 
+def U(x):
     if x[0] <= 0 or x[1] <= 0 or x[0] >= 1 or x[1] >= 1:
         return 0
-    j = int(np.round(x[0]*imRes-0.5))    
-    i = int(np.round(x[1]*imRes-0.5))    
+    j = int(np.round(x[0]*imRes-0.5))
+    i = int(np.round(x[1]*imRes-0.5))
     return -np.log(max(epsilon, dist[i, j]))
 
-def dU(x): 
+def dU(x):
     if x[0] <= 0 or x[1] <= 0 or x[0] >= 1 or x[1] >= 1:
         return 0
-    # print(x)    
-    j = int(np.round(x[0]*imRes-0.5))    
-    i = int(np.round(x[1]*imRes-0.5))    
+    # print(x)
+    j = int(np.round(x[0]*imRes-0.5))
+    i = int(np.round(x[1]*imRes-0.5))
     return -diff[i, j, :] / max(epsilon, dist[i, j])
 
 
@@ -65,19 +65,19 @@ def K(p): return 0.5* np.dot(p,p)
 
 def dK(p): return p
 
-def leapfrog(x0, p0): 
+def leapfrog(x0, p0):
     p = p0 - delta/2 * dU(x0)
     x = x0 + delta   * dK(p)
-    
+
     for i in range(L-1):
         p = p - delta * dU(x)
         x = x + delta * dK(p)
-    
+
     p = p - delta/2 * dU(x)
-    
+
     return x, p
 
-# main 
+# main
 x0 = np.array((0.5, 0.5))
 xs = [x0.copy()]
 num_reject = 0
@@ -132,7 +132,7 @@ plt.axis('off')
 plt.title('Target pdf (%dx%d)' % (imRes, imRes))
 
 plt.subplot(122)
-plt.imshow(out, vmin=0, vmax=max(dist.flatten())) 
+plt.imshow(out, vmin=0, vmax=max(dist.flatten()))
 plt.axis('equal')
 plt.axis('off')
 plt.title('HMC (%dk|%.2fk,%.2fk|%.2f)' % (nSamples/1000, num_reject/1000, num_outBound/1000, kl_div))

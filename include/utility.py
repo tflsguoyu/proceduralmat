@@ -1,5 +1,20 @@
 import torch as th
 import numpy as np
+from torchvision import *
+
+def normalize_vgg19(input):
+    transform = transforms.Normalize(
+        mean=[0.485, 0.456, 0.406],
+        std=[0.229, 0.224, 0.255]
+    )
+    return transform(input)
+
+def inv_normalize_vgg19(input):
+    transform = transforms.Normalize(
+        mean=[-0.485/0.229, -0.456/0.224, -0.406/0.255],
+        std=[1/0.229, 1/0.224, 1/0.255]
+    )
+    return transform(input)
 
 def arr(*x):
 	return th.tensor(x, dtype=th.float32)
@@ -50,32 +65,53 @@ def normals(hf, pix_size):
 	return N
 
 def logit(u):
-    return np.log(u/(1-u))
+    return np.log(u/(1-u+1e-6)+1e-6)
 
 def invLogit(v):
     return 1/(1+np.exp(-v))
 
-def transVar(x, a, b):
-	return logit((x-a)/(b-a))
-
-def invTransVar(y, a, b):
-	return a+(b-a)*invLogit(y)
-
-def invTransVarGrad(y, a, b):
-	return (b-a) * invLogit(y) * (1- invLogit(y))
-
-def KL_div(a, b):
-    assert(np.shape(a) == np.shape(b))
-    h,w = np.shape(a)
-    kl_div = 0
-    epsilon = 0.000001
-    for i in range(h):
-        for j in range(w):
-            kl_div += a[i,j] * np.log(max(epsilon,a[i,j]) / max(epsilon,b[i,j]))
-    return kl_div
+def invLogitTensor(v):
+    return 1/(1+(-v).exp())
 
 def normTo01(x, a, b):
     return (x-a)/(b-a)
-
-def normTo01_inv(x, a, b):
+    
+def invNormTo01(x, a, b):
     return x*(b-a)+a
+
+##
+def transVar(x, a, b):
+	return logit(normTo01(x,a,b))
+
+def invTransVar(y, a, b):
+	return invNormTo01(invLogit(y),a,b)
+
+def invTransVarTensor(y, a, b):
+    return invNormTo01(invLogitTensor(y),a,b)
+
+##
+# def transVar(x, a, b):
+#     return normTo01(x,a,b)
+
+# def invTransVar(y, a, b):
+#     return invNormTo01(y,a,b)
+
+# def invTransVarTensor(y, a, b):
+#     return invNormTo01(y,a,b)
+
+
+##
+# def invTransVarGrad(y, a, b):
+# 	return (b-a) * invLogit(y) * (1- invLogit(y))
+
+# def KL_div(a, b):
+#     assert(np.shape(a) == np.shape(b))
+#     h,w = np.shape(a)
+#     kl_div = 0
+#     epsilon = 0.000001
+#     for i in range(h):
+#         for j in range(w):
+#             kl_div += a[i,j] * np.log(max(epsilon,a[i,j]) / max(epsilon,b[i,j]))
+#     return kl_div
+
+    
