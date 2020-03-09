@@ -62,7 +62,7 @@
 
 
 #######
-python3 src/demo.py \
+python src/demo.py \
 	--in_dir in/bump/ \
 	--out_dir out_egsr/bump/mala/0_1/ \
 	--forward bump \
