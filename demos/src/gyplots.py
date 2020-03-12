@@ -4,7 +4,7 @@ import os
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 from PIL import Image
-import imageio
+from imageio import mimsave
 import glob
 
 def plotOptimFrames(dir, losses, img, img0, i, N):
@@ -51,7 +51,7 @@ def png2gif_optim(dir):
         im = get_concat_h(im_target, Image.open(fn))
         im = get_concat_h_resize(im, Image.open(fn_loss_list[i]))
         ims.append(np.array(im))
-    imageio.mimsave(dir+'tmp.gif', ims, fps=10, loop=999)
+    mimsave(dir+'tmp.gif', ims, fps=10, loop=999)
 
 def plotFigure(dir, losses, xs, img, img0, id, num_reject, time):
     if not os.path.exists(dir+'target.png'):
@@ -106,7 +106,7 @@ def png2gif(dir):
         im = get_concat_v(im_target, Image.open(fn))
         im = get_concat_h_resize(im, Image.open(fn_pdf_list[i]))
         ims.append(np.array(im))
-    imageio.mimsave(dir+'tmp.gif', ims, fps=10, loop=999)
+    mimsave(dir+'tmp.gif', ims, fps=10, loop=999)
 
 def get_concat_h(im1, im2):
     dst = Image.new('RGB', (im1.width + im2.width, im1.height))
