@@ -56,7 +56,7 @@ def png2gif_optim(dir):
 def plotFigure(dir, losses, xs, img, img0, id, num_reject, time):
     if not os.path.exists(dir+'target.png'):
         Image.fromarray(np.uint8(img0*255)).save(dir+'target.png')
-    Image.fromarray(np.uint8(img*255)).save(dir+'hmc%05d.png' % id)
+    # Image.fromarray(np.uint8(img*255)).save(dir+'hmc%05d.png' % id)
 
     fig = plt.figure(figsize=(4,4))
     plt.plot(losses)
@@ -78,7 +78,7 @@ def plotFigure(dir, losses, xs, img, img0, id, num_reject, time):
                 # print('i,j,k',i,j,k)
                 plt.subplot(C-1,C-1,k)
                 plt.hist2d(xs[:,i], xs[:,j], bins=50, norm=LogNorm())
-                plt.plot(xs[-1,i], xs[-1,j], 'r.', markersize=20)
+                # plt.plot(xs[-1,i], xs[-1,j], 'r.', markersize=20)
                 # plt.xlim(0.095,0.115); plt.ylim(0.3,1.0)
                 plt.xlabel('para%d' % (i+1), fontSize=10)
                 plt.ylabel('para%d' % (j+1), fontSize=10)
@@ -91,7 +91,7 @@ def plotFigure(dir, losses, xs, img, img0, id, num_reject, time):
         #     plt.subplot(2,M,i+1)
         #     plt.hist2d(xs[:,i], xs[:,i+1], bins=100, norm=LogNorm())
         #     plt.plot(xs[-1,i], xs[-1,i+1], 'r.', markersize=20)
-    plt.title('Accept %d, reject %d, time %ds' % (len(xs), num_reject, time))
+    # plt.title('Accept %d, reject %d, time %ds' % (len(xs), num_reject, time))
     plt.tight_layout()
     plt.savefig(dir+'pdf%05d.png' % id)
     plt.close()

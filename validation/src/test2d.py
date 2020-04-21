@@ -130,27 +130,24 @@ class MALAsample(MCMCsample):
     def __init__(self, pdf, T):
         print("Initial Class MALAsample()")
         super().__init__(pdf, T)
-        self.setPara(alpha=0.9, beta=0.999, c=0.25, delta=0.001)
-
-    def setPara(self, alpha, beta, c, delta):
-        self.alpha = alpha
-        self.beta = beta
-        self.c1 = c
-        self.c2 = c
-        self.delta = delta
+        self.alpha = 0.9
+        self.beta = 0.999
+        self.c1 = 0.25
+        self.c2 = 0.25
+        self.delta = 0.001
         self.V1 = np.array([0,0])
         self.V2 = np.array([0,0])
 
     def mcmc(self):
-        ###### tmp
+        ###### generate proposal from current
         U_this  =  self.U(self.xs[-1])
         dU_this = self.dU(self.xs[-1])
 
-        V1_tmp = self.alpha * self.V1 + (1 - self.alpha) * dU_this
-        V2_tmp = self.beta  * self.V2 + (1 - self.beta)  * dU_this * dU_this
+        V1_this = self.alpha * self.V1 + (1 - self.alpha) * dU_this
+        V2_this = self.beta  * self.V2 + (1 - self.beta)  * dU_this * dU_this
 
-        M1 = max(epsilon, self.num_accept)**-self.c1 * V1_tmp + dU_this
-        M2 = 1/(epsilon + max(epsilon, self.num_accept)**-self.c2 * np.sqrt(V2_tmp))
+        M1 = max(epsilon, self.num_accept)**-self.c1 * V1_this + dU_this
+        M2 = 1/(epsilon + max(epsilon, self.num_accept)**-self.c2 * np.sqrt(V2_this))
 
         mu = self.xs[-1] - 0.5 * self.delta * M1 * M2
         sigma2 = self.delta * M2
@@ -158,15 +155,15 @@ class MALAsample(MCMCsample):
         x_tmp = mu + sigma * np.random.randn(2)
         q_this = multivariate_normal.pdf(x_tmp, mu, sigma2, allow_singular = True)
 
-        ##### this
+        ##### compute proposal to current
         U_tmp  =  self.U(x_tmp)
         dU_tmp = self.dU(x_tmp)
 
-        V1_this = self.alpha * self.V1 + (1 - self.alpha) * dU_tmp
-        V2_this = self.beta  * self.V2 + (1 - self.beta) *  dU_tmp * dU_tmp
+        V1_tmp = self.alpha * self.V1 + (1 - self.alpha) * dU_tmp
+        V2_tmp = self.beta  * self.V2 + (1 - self.beta) *  dU_tmp * dU_tmp
 
-        M1 = max(epsilon, self.num_accept)**-self.c1 * V1_this + dU_tmp
-        M2 = 1/(epsilon + max(epsilon, self.num_accept)**-self.c2 * np.sqrt(V2_this))
+        M1 = max(epsilon, self.num_accept)**-self.c1 * V1_tmp + dU_tmp
+        M2 = 1/(epsilon + max(epsilon, self.num_accept)**-self.c2 * np.sqrt(V2_tmp))
 
         mu = x_tmp - 0.5 * self.delta * M1 * M2
         sigma2 = self.delta * M2
@@ -175,8 +172,8 @@ class MALAsample(MCMCsample):
         ##### #######
         arej = np.exp(U_this-U_tmp) * q_tmp/q_this
 
-        self.V1 = V1_tmp
-        self.V2 = V2_tmp
+        self.V1 = V1_this
+        self.V2 = V2_this
 
         return arej, x_tmp
 

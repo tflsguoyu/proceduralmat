@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene version="0.6.0">
+
+<integrator type="path">
+	<integer name="maxDepth" value="5"/>
+	<!-- <float name="FireflyFilter" value="0.3"/> -->
+</integrator>
+
+<sensor type="perspective">
+	<transform name="toWorld">
+		<lookat target="92, 71, -22"
+			origin="200, 112, -22"
+			up="0, 1, 0"/>
+	</transform>
+	<float name="fov" value="45"/>
+	<sampler type="ldsampler">
+		<integer name="sampleCount" value="256"/>
+	</sampler>
+	<film type="hdrfilm">
+<!-- 		<integer name="width" value="9600"/>
+		<integer name="height" value="3840"/> -->
+
+		<integer name="width" value="10000"/>
+		<integer name="height" value="3500"/>
+
+<!-- 		<integer name="width" value="4000"/>
+		<integer name="height" value="1400"/> -->
+
+		<boolean name="banner" value="false"/>
+		<rfilter type="gaussian"/>
+
+<!-- 	    <integer name="cropOffsetX" value="1310"/>
+	    <integer name="cropOffsetY" value="1430"/>
+	    <integer name="cropWidth" value="256"/>
+	    <integer name="cropHeight" value="256"/> -->
+
+<!-- 	    <integer name="cropOffsetX" value="2850"/>
+	    <integer name="cropOffsetY" value="1820"/>
+	    <integer name="cropWidth" value="256"/>
+	    <integer name="cropHeight" value="256"/> -->
+
+
+<!-- 	    <integer name="cropOffsetX" value="5760"/>
+	    <integer name="cropOffsetY" value="2610"/>
+	    <integer name="cropWidth" value="250"/>
+	    <integer name="cropHeight" value="250"/> -->
+
+<!-- 	    <integer name="cropOffsetX" value="4070"/>
+	    <integer name="cropOffsetY" value="2120"/>
+	    <integer name="cropWidth" value="300"/>
+	    <integer name="cropHeight" value="300"/> -->
+
+<!-- 	    <integer name="cropOffsetX" value="4380"/>
+	    <integer name="cropOffsetY" value="2830"/>
+	    <integer name="cropWidth" value="300"/>
+	    <integer name="cropHeight" value="300"/> -->
+
+<!-- 	    <integer name="cropOffsetX" value="5730"/>
+	    <integer name="cropOffsetY" value="1220"/>
+	    <integer name="cropWidth" value="256"/>
+	    <integer name="cropHeight" value="256"/>
+ -->
+
+	    <integer name="cropOffsetX" value="8410"/>
+	    <integer name="cropOffsetY" value="1560"/>
+	    <integer name="cropWidth" value="256"/>
+	    <integer name="cropHeight" value="256"/>
+
+
+	</film>
+
+</sensor>
+
+<emitter type="envmap">
+	<string name="filename" value="maps/env.exr"/>
+    <transform name="toWorld">
+        <rotate x="1" angle="90"/>
+    </transform>
+    <float name="scale" value="0.8"/>
+</emitter>
+
+<!-- <shape type="sphere">
+    <transform name="toWorld">
+        <scale x="5" y="5"/>
+        <translate x="-50" y="150" z="180"/>
+    </transform>
+    <emitter type="area">
+        <spectrum name="radiance" value="1000"/>
+    </emitter>
+    <bsdf type="diffuse">
+        <spectrum name="reflectance" value="0"/>
+    </bsdf>
+</shape>
+ -->
+<shape type="sphere">
+    <transform name="toWorld">
+        <scale x="5" y="5"/>
+        <translate x="100" y="115" z="20"/>
+    </transform>
+    <emitter type="area">
+        <spectrum name="radiance" value="500"/>
+    </emitter>
+    <bsdf type="diffuse">
+        <spectrum name="reflectance" value="0"/>
+    </bsdf>
+</shape>
+
+<!-- <shape type="sphere">
+    <transform name="toWorld">
+        <scale x="100" y="100"/>
+        <translate x="200" y="515" z="200"/>
+    </transform>
+    <emitter type="area">
+        <spectrum name="radiance" value="50"/>
+    </emitter>
+    <bsdf type="diffuse">
+        <spectrum name="reflectance" value="0"/>
+    </bsdf>
+</shape> -->
+
+<bsdf type="diffuse" id="check">
+	<texture type="bitmap" name="reflectance">
+		<string name="filename" value="maps/check.jpg"/>
+	</texture>
+</bsdf>
+
+<bsdf type="roughplastic" id="cloth">
+	<float name="alpha" value="0.4"/>
+	<spectrum name="diffuseReflectance" value="0.3"/>
+</bsdf>
+
+<bsdf type="twosided" id="bump1">
+	<bsdf type="normalmap">
+		<texture type="bitmap">
+			<string name="filename" value="maps/bump1/normal.exr"/>
+			<float name="uscale" value="5"/>
+			<float name="vscale" value="5"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+		<bsdf type="roughplastic">
+			<string name="distribution" value="ggx"/>
+			<texture name="alpha" type="bitmap">
+				<string name="filename" value="maps/bump1/rough.exr"/>
+				<float name="uscale" value="5"/>
+				<float name="vscale" value="5"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<texture name="diffuseReflectance" type="bitmap">
+				<string name="filename" value="maps/bump1/albedo.exr"/>
+				<float name="uscale" value="5"/>
+				<float name="vscale" value="5"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+		</bsdf>
+	</bsdf>
+</bsdf>
+
+<bsdf type="twosided" id="bump2">
+	<bsdf type="normalmap">
+		<texture type="bitmap">
+			<string name="filename" value="maps/bump2/normal.exr"/>
+			<float name="uscale" value="5"/>
+			<float name="vscale" value="5"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+		<bsdf type="roughplastic">
+			<string name="distribution" value="ggx"/>
+			<texture name="alpha" type="bitmap">
+				<string name="filename" value="maps/bump2/rough.exr"/>
+				<float name="uscale" value="5"/>
+				<float name="vscale" value="5"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<texture name="diffuseReflectance" type="bitmap">
+				<string name="filename" value="maps/bump2/albedo.exr"/>
+				<float name="uscale" value="5"/>
+				<float name="vscale" value="5"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+		</bsdf>
+	</bsdf>
+</bsdf>
+
+<bsdf type="twosided" id="metal1">
+	<bsdf type="normalmap">
+		<texture type="bitmap">
+			<string name="filename" value="maps/metal1/normal.exr"/>
+			<float name="uscale" value="10"/>
+			<float name="vscale" value="10"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+		<bsdf type="roughconductor">
+			<texture name="alphaU" type="bitmap">
+				<string name="filename" value="maps/metal1/roughx.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<texture name="alphaV" type="bitmap">
+				<string name="filename" value="maps/metal1/roughy.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<string name="distribution" value="ggx"/>
+			<texture name="specularReflectance" type="bitmap">
+				<string name="filename" value="maps/metal1/f0.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<string name="material" value="Al"/>
+		</bsdf>
+	</bsdf>
+</bsdf>
+
+<bsdf type="normalmap" id="leather1">
+	<texture type="bitmap">
+		<string name="filename" value="maps/leather1/normal.exr"/>
+		<float name="uscale" value="5"/>
+		<float name="vscale" value="5"/>
+		<float name="gamma" value="1.0"/>
+	</texture>
+	<bsdf type="roughplastic">
+		<string name="distribution" value="ggx"/>
+		<texture name="alpha" type="bitmap">
+			<string name="filename" value="maps/leather1/rough.exr"/>
+			<float name="uscale" value="5"/>
+			<float name="vscale" value="5"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+		<texture name="diffuseReflectance" type="bitmap">
+			<string name="filename" value="maps/leather1/albedo.exr"/>
+			<float name="uscale" value="5"/>
+			<float name="vscale" value="5"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+	</bsdf>
+</bsdf>
+
+<bsdf type="normalmap" id="leather3">
+	<texture type="bitmap">
+		<string name="filename" value="maps/leather3/normal.exr"/>
+		<float name="uscale" value="5"/>
+		<float name="vscale" value="5"/>
+		<float name="gamma" value="1.0"/>
+	</texture>
+	<bsdf type="roughplastic">
+		<string name="distribution" value="ggx"/>
+		<texture name="alpha" type="bitmap">
+			<string name="filename" value="maps/leather3/rough.exr"/>
+			<float name="uscale" value="5"/>
+			<float name="vscale" value="5"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+		<texture name="diffuseReflectance" type="bitmap">
+			<string name="filename" value="maps/leather3/albedo.exr"/>
+			<float name="uscale" value="5"/>
+			<float name="vscale" value="5"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+	</bsdf>
+</bsdf>
+
+<bsdf type="twosided" id="flake1">
+	<bsdf type="mixturebsdf">
+		<string name="weights" value="0.5, 0.5"/>
+		<bsdf type="normalmap">
+			<texture type="bitmap">
+				<string name="filename" value="maps/flake1/normal_flake.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<bsdf type="roughconductor">
+				<texture name="alpha" type="bitmap">
+					<string name="filename" value="maps/flake1/rough_flake.exr"/>
+					<float name="uscale" value="10"/>
+					<float name="vscale" value="10"/>
+					<float name="gamma" value="1.0"/>
+				</texture>
+				<texture name="specularReflectance" type="bitmap">
+					<string name="filename" value="maps/flake1/f0_flake.exr"/>
+					<float name="uscale" value="10"/>
+					<float name="vscale" value="10"/>
+					<float name="gamma" value="1.0"/>
+				</texture>
+				<string name="material" value="Al"/>
+			</bsdf>
+		</bsdf>
+		<bsdf type="roughplastic">
+			<string name="distribution" value="ggx"/>
+			<texture name="alpha" type="bitmap">
+				<string name="filename" value="maps/flake1/rough_top.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<texture name="diffuseReflectance" type="bitmap">
+				<string name="filename" value="maps/flake1/albedo.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+		</bsdf>
+	</bsdf>
+</bsdf>
+
+<bsdf type="twosided" id="flake2">
+	<bsdf type="mixturebsdf">
+		<string name="weights" value="0.5, 0.5"/>
+		<bsdf type="normalmap">
+			<texture type="bitmap">
+				<string name="filename" value="maps/flake2/normal_flake.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<bsdf type="roughconductor">
+				<texture name="alpha" type="bitmap">
+					<string name="filename" value="maps/flake2/rough_flake.exr"/>
+					<float name="uscale" value="10"/>
+					<float name="vscale" value="10"/>
+					<float name="gamma" value="1.0"/>
+				</texture>
+				<texture name="specularReflectance" type="bitmap">
+					<string name="filename" value="maps/flake2/f0_flake.exr"/>
+					<float name="uscale" value="10"/>
+					<float name="vscale" value="10"/>
+					<float name="gamma" value="1.0"/>
+				</texture>
+				<string name="material" value="Al"/>
+			</bsdf>
+		</bsdf>
+		<bsdf type="roughplastic">
+			<string name="distribution" value="ggx"/>
+			<texture name="alpha" type="bitmap">
+				<string name="filename" value="maps/flake2/rough_top.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<texture name="diffuseReflectance" type="bitmap">
+				<string name="filename" value="maps/flake2/albedo.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+		</bsdf>
+	</bsdf>
+</bsdf>
+
+<bsdf type="twosided" id="flake3">
+	<bsdf type="mixturebsdf">
+		<string name="weights" value="0.5, 0.5"/>
+		<bsdf type="normalmap">
+			<texture type="bitmap">
+				<string name="filename" value="maps/flake3/normal_flake.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<bsdf type="roughconductor">
+				<texture name="alpha" type="bitmap">
+					<string name="filename" value="maps/flake3/rough_flake.exr"/>
+					<float name="uscale" value="10"/>
+					<float name="vscale" value="10"/>
+					<float name="gamma" value="1.0"/>
+				</texture>
+				<texture name="specularReflectance" type="bitmap">
+					<string name="filename" value="maps/flake3/f0_flake.exr"/>
+					<float name="uscale" value="10"/>
+					<float name="vscale" value="10"/>
+					<float name="gamma" value="1.0"/>
+				</texture>
+				<string name="material" value="Al"/>
+			</bsdf>
+		</bsdf>
+		<bsdf type="roughplastic">
+			<string name="distribution" value="ggx"/>
+			<texture name="alpha" type="bitmap">
+				<string name="filename" value="maps/flake3/rough_top.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+			<texture name="diffuseReflectance" type="bitmap">
+				<string name="filename" value="maps/flake3/albedo.exr"/>
+				<float name="uscale" value="10"/>
+				<float name="vscale" value="10"/>
+				<float name="gamma" value="1.0"/>
+			</texture>
+		</bsdf>
+	</bsdf>
+</bsdf>
+
+
+<bsdf type="normalmap" id="wood1">
+	<texture type="bitmap">
+		<string name="filename" value="maps/wood1/normal.exr"/>
+		<float name="uscale" value="2"/>
+		<float name="vscale" value="2"/>
+		<float name="gamma" value="1.0"/>
+	</texture>
+	<bsdf type="roughplastic">
+		<string name="distribution" value="ggx"/>
+		<texture name="alpha" type="bitmap">
+			<string name="filename" value="maps/wood1/rough.exr"/>
+			<float name="uscale" value="2"/>
+			<float name="vscale" value="2"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+		<texture name="diffuseReflectance" type="bitmap">
+			<string name="filename" value="maps/wood1/albedo.exr"/>
+			<float name="uscale" value="2"/>
+			<float name="vscale" value="2"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+	</bsdf>
+</bsdf>
+
+<bsdf type="normalmap" id="wood2">
+	<texture type="bitmap">
+		<string name="filename" value="maps/wood2/normal.exr"/>
+		<float name="uscale" value="2"/>
+		<float name="vscale" value="2"/>
+		<float name="gamma" value="1.0"/>
+	</texture>
+	<bsdf type="roughplastic">
+		<string name="distribution" value="ggx"/>
+		<texture name="alpha" type="bitmap">
+			<string name="filename" value="maps/wood2/rough.exr"/>
+			<float name="uscale" value="2"/>
+			<float name="vscale" value="2"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+		<texture name="diffuseReflectance" type="bitmap">
+			<string name="filename" value="maps/wood2/albedo.exr"/>
+			<float name="uscale" value="2"/>
+			<float name="vscale" value="2"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+	</bsdf>
+</bsdf>
+
+
+<bsdf type="normalmap" id="wood3">
+	<texture type="bitmap">
+		<string name="filename" value="maps/wood3/normal.exr"/>
+		<float name="uscale" value="2"/>
+		<float name="vscale" value="2"/>
+		<float name="gamma" value="1.0"/>
+	</texture>
+	<bsdf type="roughplastic">
+		<string name="distribution" value="ggx"/>
+		<texture name="alpha" type="bitmap">
+			<string name="filename" value="maps/wood3/rough.exr"/>
+			<float name="uscale" value="2"/>
+			<float name="vscale" value="2"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+		<texture name="diffuseReflectance" type="bitmap">
+			<string name="filename" value="maps/wood3/albedo.exr"/>
+			<float name="uscale" value="2"/>
+			<float name="vscale" value="2"/>
+			<float name="gamma" value="1.0"/>
+		</texture>
+	</bsdf>
+</bsdf>
+
+<!-- cloth -->
+<shape type="ply">
+	<string name="filename" value="models/model_1.ply"/>
+	<ref id="cloth"/>
+</shape>
+
+<!-- pot back -->
+<shape type="ply">
+	<string name="filename" value="models/model_2.ply"/>
+	<ref id="flake2"/>
+</shape>
+
+<!-- pot left -->
+<shape type="ply">
+	<string name="filename" value="models/model_3.ply"/>
+	<ref id="metal1"/>
+</shape>
+
+<!-- pot right -->
+<shape type="ply">
+	<string name="filename" value="models/model_4.ply"/>
+	<ref id="bump2"/>
+</shape>
+
+<!-- box left upper -->
+<shape type="ply">
+	<string name="filename" value="models/model_5.ply"/>
+	<!-- <bsdf type="conductor"/> -->
+	<ref id="wood2"/>
+</shape>
+
+<!-- <shape type="sphere">
+    <transform name="toWorld">
+        <scale x="10" y="10"/>
+        <translate x="-23" y="18" z="-7"/>
+    </transform>
+	<ref id="wood2"/>
+</shape> -->
+
+<!-- box left lower -->
+<shape type="ply">
+	<string name="filename" value="models/model_6.ply"/>
+	<ref id="wood3"/>
+</shape>
+
+<!-- box right body -->
+<shape type="ply">
+	<string name="filename" value="models/model_7.ply"/>
+	<ref id="flake3"/>
+</shape>
+
+<!-- box right cover -->
+<shape type="ply">
+	<string name="filename" value="models/model_8.ply"/>
+	<ref id="flake3"/>
+</shape>
+
+<!-- bag body -->
+<shape type="ply">
+	<string name="filename" value="models/model_9.ply"/>
+	<!-- <bsdf type="conductor"/> -->
+	<ref id="leather1"/>
+</shape>
+
+<!-- bag string (not important) -->
+<shape type="ply">
+	<string name="filename" value="models/model_10.ply"/>
+</shape>
+
+<!-- bag attachment (not important) -->
+<shape type="ply">
+	<string name="filename" value="models/model_11.ply"/>
+</shape>
+
+</scene>

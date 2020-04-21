@@ -1,5 +1,42 @@
-#  lgiht, f0, roughx, roughy, fsigmax, fsigmay, fscale, iSigma
-# python3 src/demo.py --in_dir in/metal/ --out_dir out/ --forward metal --operation generate --fn 0.png
+#  light, f0, roughx, roughy, fsigmax, fsigmay, fscale, iSigma
+python src/bayesian.py \
+	--forward metal \
+	--operation generate \
+	--out_dir in/real_estimate/5_metal_real1/ \
+	--size 10 \
+	--imres 1024 \
+	--save_tex yes \
+	--para_all 1382.704 0.285 0.285 0.285 0.204 0.438 0.038 14.532 0.036 13.343
+	# --para_all 999 0.8 0.8 0.4 0.1 0.5 0.05 5 0.05 10 \
+
+# optimize
+# python src/bayesian.py \
+# 	--forward metal \
+# 	--operation optimize \
+# 	--in_dir in/5_metal_real1/ \
+# 	--out_dir out/5_metal_real1_optim1/ \
+# 	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 \
+# 	--epochs 1000 \
+# 	--lr 0.01 \
+# 	--size 10 \
+# 	--imres 512 \
+# 	--sum_func Grids
+
+
+# python src/bayesian.py \
+# 	--forward metal \
+# 	--operation sample \
+# 	--in_dir in/5_metal_real1/ \
+# 	--out_dir out/5_metal_real1/ \
+# 	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 \
+# 	--epochs 100 \
+# 	--lr 0.002 \
+# 	--size 10 \
+# 	--imres 512 \
+# 	--sum_func Grids \
+# 	--mcmc MALA \
+# 	--para_all 1382.704 0.085 0.085 0.085 0.204 0.438 0.038 14.532 0.036 13.343
+
 
 # python3 src/demo.py --in_dir in/metal/ --out_dir out/ --forward metal --operation generate --fn 1.png
 
@@ -36,7 +73,7 @@
 # python3 src/demo.py --in_dir in/metal/ --out_dir out/metal/hmc/test_time/ --forward metal --operation sample --fn 0.png --para_all 999 0.4 0.4 0.4 0.1 0.5 0.5 5 0.05 10 --para_eval_idx 0 1 2 3 4 5 6 7 8 9 --err_sigma 0.001 0.001 0.001 0.001 --epochs 101 --lf_lens 0.01 --lf_steps 4
 
 # # optimize
-python3 src/demo.py --in_dir in/metal/ --out_dir out/metal/optim/test_time/ --forward metal --operation optimize --fn 0.png --para_all 999 0.4 0.4 0.4 0.1 0.5 0.5 5 0.05 10 --para_eval_idx 0 1 2 3 4 5 6 7 8 9 --err_sigma 0.001 0.001 0.001 0.001 --epochs 1 --lr 0.001
+# python3 src/demo.py --in_dir in/metal/ --out_dir out/metal/optim/test_time/ --forward metal --operation optimize --fn 0.png --para_all 999 0.4 0.4 0.4 0.1 0.5 0.5 5 0.05 10 --para_eval_idx 0 1 2 3 4 5 6 7 8 9 --err_sigma 0.001 0.001 0.001 0.001 --epochs 1 --lr 0.001
 
 # python3 src/demo.py --in_dir in/metal/ --out_dir out/metal/optim/0/ --forward metal --operation optimize --fn 0.png --para_all 999 0.4 0.4 0.4 0.1 0.4 0.05 10 0.01 10 --para_eval_idx 0 1 2 3 4 5 6 7 8 9 --err_sigma 0.001 0.001 --epochs 1001 --lr 0.01 --to_save fig
 

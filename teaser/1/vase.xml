@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<scene version="0.5.0">
+	
+	<integrator type="path">
+		<integer name="maxDepth" value="5"/>
+		<!-- <integer name="rrDepth" value="20"/> -->
+		<!-- <float name="FireflyFilter" value="0.3"/>		 -->
+	</integrator>
+
+	<sensor type="perspective">
+		<string name="fovAxis" value="smaller"/>
+		<float name="fov" value="10"/>
+		
+		<transform name="toWorld">
+			<lookAt origin="0 -2500 800" target="0 0 20" up="0 0 1"/>
+		</transform>	
+
+		<sampler type="independent">
+			<integer name="sampleCount" value="1024"/>
+		</sampler>	
+ 		
+ 		<film id="film" type="hdrfilm">
+			<integer name="width" value="2400"/>
+			<integer name="height" value="1000"/>
+			<string name="fileFormat" value="openexr"/>
+			<boolean name="banner" value="false"/>
+
+<!-- cloth -->
+<!--             <integer name="cropOffsetX" value="1020"/>
+            <integer name="cropOffsetY" value="7030"/>
+            <integer name="cropWidth" value="750"/>
+            <integer name="cropHeight" value="2000"/>
+            <integer name="width" value="15000"/>
+            <integer name="height" value="10000"/>	 -->
+
+<!-- left vase -->
+<!--             <integer name="cropOffsetX" value="3460"/>
+            <integer name="cropOffsetY" value="4740"/>
+            <integer name="cropWidth" value="750"/>
+            <integer name="cropHeight" value="2000"/>
+            <integer name="width" value="15000"/>
+            <integer name="height" value="10000"/> -->
+
+<!-- middle vase -->
+<!--             <integer name="cropOffsetX" value="7130"/>
+            <integer name="cropOffsetY" value="3710"/>
+            <integer name="cropWidth" value="750"/>
+            <integer name="cropHeight" value="2000"/>
+            <integer name="width" value="15000"/>
+            <integer name="height" value="10000"/> -->
+
+<!-- right vase -->
+<!--             <integer name="cropOffsetX" value="10400"/>
+            <integer name="cropOffsetY" value="3830"/>
+            <integer name="cropWidth" value="750"/>
+            <integer name="cropHeight" value="2000"/>
+            <integer name="width" value="15000"/>
+            <integer name="height" value="10000"/>	 -->
+
+		</film>
+	</sensor>
+
+    <emitter type="envmap">
+        <string name="filename" value="normals/envmap_hd.exr"/>
+        <transform name="toWorld">
+            <rotate y="1" angle="280"/>
+            <rotate x="1" angle="90"/>
+        </transform>
+        <float name="scale" value="0.7"/>
+    </emitter>
+
+
+    <shape type="sphere">
+        <transform name="toWorld">
+            <scale x="20" y="20"/>
+            <translate x="-330" y="-110" z="330"/>
+        </transform>
+        <emitter type="area">
+            <spectrum name="radiance" value="500"/>
+        </emitter>
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="0"/>
+        </bsdf>
+    </shape>    
+
+    <shape type="sphere">
+        <transform name="toWorld">
+            <scale x="20" y="20"/>
+            <translate x="-150" y="-440" z="-330"/>
+        </transform>
+        <emitter type="area">
+            <spectrum name="radiance" value="40"/>
+        </emitter>
+        <bsdf type="diffuse">
+            <spectrum name="reflectance" value="0"/>
+        </bsdf>
+    </shape>    
+
+
+	<shape type="rectangle">
+		<transform name="toWorld">
+			<scale x="2000.0" y="2000.0"/>
+			<translate x="0" y="0" z="-101"/>
+		</transform>
+
+		<bsdf type="diffuse"/>
+<!-- 		<bsdf type="conductor">
+			<float name="alphaU" value="0.1"/>
+			<float name="alphaV" value="0.1"/>
+			<string name="distribution" value="ggx"/>
+			<string name="material" value="Hg"/>
+			<float name="extEta" value="1"/>
+			<rgb name="specularReflectance" value="0.578596, 0.578596, 0.578596"/>
+			<rgb name="eta" value="1.65746, 0.880369, 0.521229"/>
+			<rgb name="k" value="9.22387, 6.26952, 4.837"/>
+		</bsdf> -->
+
+	</shape>
+
+<!-- Table cloth -->
+<!-- 	<shape type="obj">
+		<transform name="toWorld">
+			<scale x="160" y="160" z="160"/>
+			<translate x="0" y="0" z="-110"/>
+		</transform>
+		<string name="filename" value="model/tablecloth_highres.obj"/>
+
+
+	</shape> -->
+
+<!-- Right vase -->
+	<shape type="obj">
+		<transform name="toWorld">
+			<scale x="1.2" y="1.2" z="1.2"/>
+			<rotate z="1" angle="90"/>
+			<translate x="170" y="30" z="30"/>
+		</transform>
+		<string name="filename" value="model/vase1.obj"/>
+	
+		<bsdf type="coating" id="flake">
+				<float name="intIOR" value="1.5"/>
+				<bsdf type="mixturebsdf">
+					<string name="weights" value="0.95, 0.05"/>
+					<bsdf type="roughconductor">
+						<string name="distribution" value="ggx"/>
+						<float name="alpha" value="0.1"/>
+						<rgb name="specularReflectance" value="0.00, 0.08, 0.8"/>
+<!-- 						<rgb name="eta" value="0.521229, 0.880369, 1.65746"/>
+						<rgb name="k" value="9.22387, 6.26952, 4.837"/> -->
+					</bsdf>
+					<bsdf type="normalmap">
+						<texture type="bitmap">
+							<string name="filename" value="normals/flake_.exr"/>
+							<float name="uscale" value="10"/>
+							<float name="vscale" value="10"/>
+							<float name="gamma" value="1.0"/>
+						</texture>
+						<bsdf type="roughconductor">
+							<float name="alpha" value="0.01"/>
+							<!-- <float name="extEta" value="1"/> -->
+							<string name="material" value="Hg"/>
+						</bsdf>
+					</bsdf>
+				</bsdf>
+			</bsdf>	
+
+	</shape>
+
+<!-- Middle vase -->
+	<shape type="disk">
+		<transform name="toWorld">
+			<scale x="37" y="37"/>
+			<rotate x="1" angle="180"/>			
+			<translate x="0.3" y="20" z="-101"/>
+		</transform>
+		<bsdf type="roughdielectric">
+			<float name="alpha" value="0.5"/>
+		</bsdf>
+	</shape>
+
+	<shape type="obj">
+		<transform name="toWorld">
+			<scale x="1.2" y="1.2" z="1.2"/>
+			<rotate z="1" angle="180"/>			
+			<translate x="0" y="20" z="53"/>
+		</transform>
+		<string name="filename" value="model/vase2.obj"/>
+	
+		<bsdf type="twosided" id="SteelPot2">
+			<bsdf type="normalmap">
+				<texture type="bitmap">
+					<string name="filename" value="normals/brush_.exr"/>
+					<float name="uscale" value="10"/>
+					<float name="vscale" value="10"/>
+					<float name="gamma" value="1.0"/>
+				</texture>
+				<bsdf type="roughconductor">
+					<float name="alphaU" value="0.01"/>
+					<float name="alphaV" value="0.01"/>
+					<string name="distribution" value="ggx"/>
+					<float name="extEta" value="1"/>
+					<rgb name="specularReflectance" value="0.578596, 0.578596, 0.578596"/>
+					<rgb name="eta" value="1.65746, 0.880369, 0.521229"/>
+					<rgb name="k" value="9.22387, 6.26952, 4.837"/>
+				</bsdf>
+			</bsdf>		
+
+		</bsdf>
+	</shape>
+
+<!-- Left vase -->
+	<shape type="obj">
+		<transform name="toWorld">
+			<scale x="1.2" y="1.2" z="1.2"/>
+			<rotate z="1" angle="90"/>
+			<translate x="-170" y="20" z="7"/>
+		</transform>
+		<string name="filename" value="model/vase3.obj"/>
+	
+		<bsdf type="twosided" id="KettleRed">
+			<bsdf type="normalmap_gy">
+				<texture type="bitmap">
+					<string name="filename" value="normals/red-paint_.exr"/>
+					<float name="uscale" value="1"/>
+					<float name="vscale" value="1"/>
+					<float name="gamma" value="1.0"/>
+				</texture>
+
+				<bsdf type="roughplastic">
+					<float name="alpha" value="0.1"/>
+					<string name="distribution" value="ggx"/>
+					<float name="intIOR" value="1.5"/>
+					<float name="extIOR" value="1"/>
+					<!-- <boolean name="nonlinear" value="true"/> -->
+					<rgb name="diffuseReflectance" value="0.248, 0.07, 0.07"/>
+				</bsdf>
+			</bsdf>
+		</bsdf>
+	</shape>
+
+	<shape type="obj">
+		<transform name="toWorld">
+			<scale x="1.2" y="1.2" z="0.8"/>
+			<rotate z="1" angle="90"/>
+			<translate x="80" y="-150" z="-10"/>
+		</transform>
+		<string name="filename" value="model/vase1.obj"/>
+
+
+		<bsdf type="twosided">
+			<bsdf type="normalmap">
+				<texture type="bitmap">
+					<string name="filename" value="normals/brush_v.exr"/>
+					<float name="uscale" value="10"/>
+					<float name="vscale" value="10"/>
+					<float name="gamma" value="1.0"/>
+				</texture>
+				<bsdf type="roughconductor">
+					<float name="alphaU" value="0.2"/>
+					<float name="alphaV" value="0.05"/>
+					<string name="distribution" value="ggx"/>
+					<float name="extEta" value="1"/>
+					<rgb name="specularReflectance" value="0.578596, 0.578596, 0.578596"/>
+					<rgb name="eta" value="1.65746, 0.880369, 0.521229"/>
+					<rgb name="k" value="9.22387, 6.26952, 4.837"/>
+				</bsdf>
+			</bsdf>		
+
+		</bsdf>
+
+	</shape>
+
+	<shape type="obj">
+		<transform name="toWorld">
+			<scale x="1.5" y="1.5" z="1.5"/>
+			<rotate x="1" angle="90"/>
+			<rotate z="1" angle="-45"/>
+			<translate x="-110" y="-200" z="-100"/>
+		</transform>
+		<string name="filename" value="model/teapot.obj"/>
+	
+		<bsdf type="twosided">
+			<bsdf type="normalmap_gy">
+				<texture type="bitmap">
+					<string name="filename" value="normals/red-paint_.exr"/>
+					<float name="uscale" value="2"/>
+					<float name="vscale" value="2"/>
+					<float name="gamma" value="1.0"/>
+				</texture>
+
+
+				<bsdf type="roughplastic">
+					<float name="alpha" value="0.2"/>
+					<string name="distribution" value="ggx"/>
+					<float name="intIOR" value="1.5"/>
+					<float name="extIOR" value="1"/>
+					<!-- <boolean name="nonlinear" value="true"/> -->
+					<rgb name="diffuseReflectance" value="0.204739, 0.216847, 0.2"/>
+				</bsdf>
+			</bsdf>
+		</bsdf>	
+
+
+	</shape>
+
+</scene>

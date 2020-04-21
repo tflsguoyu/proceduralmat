@@ -1,9 +1,4 @@
-import numpy as np
-import torch as th
-from gytools import *
-from torchvision.transforms import Normalize, Compose
-import sys
-# sys.path.insert(0, '../../../neural')
+from util import *
 from descriptor import *
 
 class Grids:
@@ -32,35 +27,27 @@ class Grids:
     def evalBinsFFT(self, img):
         imgFFT = img.min(2)
         imgFFT = imgFFT[0]
-        imgFFT = shift(th.stack((imgFFT, th.zeros_like(imgFFT)), 2)).fft(2)
-        imgFFT = shift(imgFFT.norm(2.0, 2).log1p())
+        imgFFT = gyShift(th.stack((imgFFT, th.zeros_like(imgFFT)), 2)).fft(2)
+        imgFFT = gyShift(imgFFT.norm(2.0, 2).log1p())
         tmp = imgFFT.transpose(0,1).reshape((self.nbin_var, int(self.imres*self.imres/self.nbin_var))).mean(1)
         return tmp
 
     def logpdf(self, img):
         binThisMu = self.evalBins(img)
-        # binSigma = 0.2 * self.binTargetMu
-        binSigma = th.max(self.err_sigma[0] * self.binTargetMu,
-            self.err_sigma[1] * th.ones_like(self.binTargetMu))
-        # lpdf = ((binThisMu - self.binTargetMu).pow(2.0)/(2.0*binSigma.pow(2.0))).sum()
-
+        binSigma = th.tensor(0.1, device=self.device)
         lpdf = ((binThisMu - self.binTargetMu).pow(2.0)/(2.0*binSigma.pow(2.0)) + \
                 (np.sqrt(2*np.pi)*binSigma).log()).sum()
 
         if self.useFFTimg:
             binThisFFTMu = self.evalBinsFFT(img)
-            # binFFTSigma = 05 * self.binTargetFFTMu
-            binFFTSigma = th.max(self.err_sigma[2] * self.binTargetFFTMu,
-                self.err_sigma[3] * th.ones_like(self.binTargetFFTMu))
-            # lpdf += ((binThisFFTMu - self.binTargetFFTMu).pow(2.0)/(2.0*binFFTSigma.pow(2.0))).sum()
-
+            binFFTSigma = th.tensor(0.2, device=self.device)
             lpdf += ((binThisFFTMu - self.binTargetFFTMu).pow(2.0)/(2.0*binFFTSigma.pow(2.0)) + \
                 (np.sqrt(2*np.pi)*binFFTSigma).log()).sum()
 
         return lpdf
 
 class Bins:
-    def __init__(self, target, imsize, err_sigma, device):
+    def __init__(self, target, imsize, err_sigma, useFFTimg, device):
         print("Initial Class sumfunc::Bins()")
         self.imsize = imsize
         self.device = device
@@ -69,7 +56,7 @@ class Bins:
 
         self.target = th.from_numpy(target).to(device)
 
-        self.useFFTimg = True
+        self.useFFTimg = useFFTimg
         self.initBinsR([16,0, 8,1])
         self.binTargetMu = self.evalBins(self.target)
         if self.useFFTimg:
@@ -126,29 +113,30 @@ class Bins:
     def evalBinsFFT(self, img):
         imgFFT = img.min(2)
         imgFFT = imgFFT[0]
-        imgFFT = shift(th.stack((imgFFT, th.zeros_like(imgFFT)), 2)).fft(2)
-        imgFFT = shift(imgFFT.norm(2.0, 2).log1p())
+        imgFFT = gyShift(th.stack((imgFFT, th.zeros_like(imgFFT)), 2)).fft(2)
+        imgFFT = gyShift(imgFFT.norm(2.0, 2).log1p())
         return th.mm(self.binFFTBasesT, imgFFT.view(self.imres*self.imres, 1)).view(-1)
 
     def logpdf(self, img):
         binThisMu = self.evalBins(img)
-        # binSigma = 0.2 * self.binTargetMu
-        binSigma = th.max(self.err_sigma[0] * self.binTargetMu,
-            self.err_sigma[1] * th.ones_like(self.binTargetMu))
+        binSigma = th.tensor(0.02, device=self.device)
+        # binSigma = th.max(self.err_sigma[0] * self.binTargetMu,
+        #     self.err_sigma[1] * th.ones_like(self.binTargetMu))
+
         # lpdf = ((binThisMu - self.binTargetMu).pow(2.0)/(2.0*binSigma.pow(2.0))).sum()
 
         lpdf = ((binThisMu - self.binTargetMu).pow(2.0)/(2.0*binSigma.pow(2.0)) + \
-                (np.sqrt(2*np.pi)*binSigma).log()).sum()
+                (np.sqrt(2*np.pi)*binSigma).log()).mean()
 
         if self.useFFTimg:
             binThisFFTMu = self.evalBinsFFT(img)
-            # binFFTSigma = 05 * self.binTargetFFTMu
-            binFFTSigma = th.max(self.err_sigma[2] * self.binTargetFFTMu,
-                self.err_sigma[3] * th.ones_like(self.binTargetFFTMu))
+            binFFTSigma = th.tensor(0.5, device=self.device)
+            # binFFTSigma = th.max(self.err_sigma[2] * self.binTargetFFTMu,
+            #     self.err_sigma[3] * th.ones_like(self.binTargetFFTMu))
             # lpdf += ((binThisFFTMu - self.binTargetFFTMu).pow(2.0)/(2.0*binFFTSigma.pow(2.0))).sum()
 
             lpdf += ((binThisFFTMu - self.binTargetFFTMu).pow(2.0)/(2.0*binFFTSigma.pow(2.0)) + \
-                (np.sqrt(2*np.pi)*binFFTSigma).log()).sum()
+                (np.sqrt(2*np.pi)*binFFTSigma).log()).mean()
 
         return lpdf
 
@@ -162,14 +150,25 @@ class T_G:
         self.err_sigma = err_sigma
 
         self.target = th.from_numpy(target).to(device)
+        # print(self.target.type())
+        # exit()
 
         self.td = TextureDescriptor(device)
         # freeze the weights of td
         for p in self.td.parameters():
             p.requires_grad = False
 
-        self.target_mean = self.target.reshape(self.imres*self.imres, 3).mean(0)
-        self.target_var = self.target.reshape(self.imres*self.imres, 3).var(0)
+        self.cropL = int(self.imres/100*30)
+        self.cropR = int(self.imres/100*70)
+
+        self.target_R = self.target[self.cropL:self.cropR, self.cropL:self.cropR, 0].mean()
+        self.target_G = self.target[self.cropL:self.cropR, self.cropL:self.cropR, 1].mean()
+        self.target_B = self.target[self.cropL:self.cropR, self.cropL:self.cropR, 2].mean()
+        self.targetB_R = self.target[:self.cropL, :, 0].mean()
+        self.targetB_G = self.target[:self.cropL, :, 1].mean()
+        self.targetB_B = self.target[:self.cropL, :, 2].mean()
+
+        # self.target_var = self.target.reshape(self.imres*self.imres, 3).var(0)
         # print('target mean var:', self.target_mean, self.target_var)
 
         self.td_target = self.td(self.normalize_vgg19(self.target.permute(2,0,1)))
@@ -183,34 +182,44 @@ class T_G:
         return self.criterion(td_this, self.td_target)
 
     def normalize_vgg19(self, input):
-        transform = transforms.Normalize(
+        transform = torchvision.transforms.Normalize(
             mean=[0.485, 0.456, 0.406],
             std=[0.229, 0.224, 0.255]
         )
         return transform(input)
 
     def inv_normalize_vgg19(self, input):
-        transform = transforms.Normalize(
+        transform = torchvision.transforms.Normalize(
             mean=[-0.485/0.229, -0.456/0.224, -0.406/0.255],
             std=[1/0.229, 1/0.224, 1/0.255]
         )
         return transform(input)
 
     def logpdf(self, img):
-        # lpdf = self.criterion(self.target, img)
         td_this = self.td(self.normalize_vgg19(img.permute(2,0,1)))
+        sigma = th.tensor(0.01, device=self.device)
+        lpdf1 = ((td_this - self.td_target).pow(2.0)/(2.0*sigma.pow(2.0)) + \
+                (np.sqrt(2*np.pi)*sigma).log()).mean()
 
-        # sigma = th.max(0.001 * self.td_target, th.tensor(0.001,device=self.device))
-        # sigma = th.max(self.err_sigma[0] * self.td_target,
-        #     th.tensor(self.err_sigma[1], device=self.device))
-        sigma = self.err_sigma[0]
-        lpdf = ((td_this - self.td_target).pow(2.0)/(2.0*sigma**2.0)).mean()
-        # lpdf = ((td_this - self.td_target).pow(2.0)/(2.0*sigma.pow(2.0)) + \
-        #         (np.sqrt(2*np.pi)*sigma).log()).mean()
+        img_R = img[self.cropL:self.cropR, self.cropL:self.cropR, 0].mean()
+        img_G = img[self.cropL:self.cropR, self.cropL:self.cropR, 1].mean()
+        img_B = img[self.cropL:self.cropR, self.cropL:self.cropR, 2].mean()
+        imgB_R = img[:self.cropL, :, 0].mean()
+        imgB_G = img[:self.cropL, :, 1].mean()
+        imgB_B = img[:self.cropL, :, 2].mean()
+        # print(img_R, img_G, img_B)
+        sigma_mean = th.tensor(0.02, device=self.device)
+        lpdf2 = (img_R - self.target_R).pow(2.0)/(2.0*sigma_mean**2.0) + \
+                (img_G - self.target_G).pow(2.0)/(2.0*sigma_mean**2.0) + \
+                (img_B - self.target_B).pow(2.0)/(2.0*sigma_mean**2.0) + \
+                (imgB_R - self.targetB_R).pow(2.0)/(2.0*sigma_mean**2.0) + \
+                (imgB_G - self.targetB_G).pow(2.0)/(2.0*sigma_mean**2.0) + \
+                (imgB_B - self.targetB_B).pow(2.0)/(2.0*sigma_mean**2.0)
 
-        # self.img_mean = img.reshape(self.imres*self.imres, 3).mean(0)
-        # sigma_mean = self.err_sigma[2]
-        # lpdf += ((self.img_mean - self.target_mean).pow(2.0)/(2.0*sigma_mean**2.0)).sum()
+        lpdf = lpdf1 + lpdf2
+
+        # print('log pdf :', lpdf1.item())
+        # print('log mean:', lpdf2.item())
 
         # self.img_var = img.reshape(self.imres*self.imres, 3).var(0)
         # sigma_var = self.err_sigma[3]
@@ -220,7 +229,7 @@ class T_G:
 
 
 class Mean_Var:
-    def __init__(self, target, device):
+    def __init__(self, target, err_sigma, device):
         print("Initial Class sumfunc::Mean_Var()")
         self.device = device
         self.target = th.from_numpy(target).to(device)
@@ -234,18 +243,23 @@ class Mean_Var:
 
 
     def logpdf(self, img):
-        lpdf = self.loss(self.target, img)
+
+        sigma = th.tensor(0.02, device=self.device)
+        lpdf = ((img - self.target).pow(2.0)/(2.0*sigma.pow(2.0)) + \
+                (np.sqrt(2*np.pi)*sigma).log()).mean()
+
+        # lpdf = self.loss(self.target, img)
 
         # sigma = th.tensor(0.01, device=self.device)
         # lpdf = ((td_this - self.td_target).pow(2.0)/(2.0*sigma.pow(2.0)) + \
         #         (np.sqrt(2*np.pi)*sigma).log()).mean()
 
-        self.img_mean = img.reshape(self.n*self.n, 3).mean(0)
+        # self.img_mean = img.reshape(self.n*self.n, 3).mean(0)
         # sigma_mean = th.max(0.1 * self.target_mean, th.tensor(0.01,device=self.device))
         # lpdf += ((self.img_mean - self.target_mean).pow(2.0)/(2.0*sigma_mean.pow(2.0)) + \
         #         (np.sqrt(2*np.pi)*sigma_mean).log()).sum()
 
-        self.img_var = img.reshape(self.n*self.n, 3).var(0)
+        # self.img_var = img.reshape(self.n*self.n, 3).var(0)
         # sigma_var = th.max(0.1 * self.target_var, th.tensor(0.001,device=self.device))
         # lpdf += ((self.img_var - self.target_var).pow(2.0)/(2.0*sigma_var.pow(2.0)) + \
         #         (np.sqrt(2*np.pi)*sigma_var).log()).sum()

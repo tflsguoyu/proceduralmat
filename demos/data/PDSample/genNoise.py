@@ -2,13 +2,16 @@ from os import system
 import matplotlib.pyplot as plt
 from sys import argv
 from numpy import *
+import numpy as np
+from PIL import Image
 
 cmd = "g++ PDSample.cpp PDSampling.cpp RangeList.cpp RNG.cpp ScallopedSector.cpp -o PDSample"
 system(cmd)
 
-n = 512
-_r = 0.01
-seed = 1234
+res = 1024
+n = res + 10*2
+_r = 0.015
+seed = 12345
 
 cmd = "./PDSample -r %f -s %d" % (_r, seed)
 system(cmd)
@@ -32,7 +35,7 @@ P += 1
 P *= real2pix
 r *= real2pix
 r = int32(ceil(r * 2.5))
-print(r)
+print('r:', r)
 
 x = arange(2*r + 1, dtype=float32) - r
 x, y = meshgrid(x, x)
@@ -60,16 +63,23 @@ for i in range(k):
 
 d = d[r:-r, r:-r]
 idx = idx[r:-r, r:-r]
-print(d.shape)
-print(idx.min())
-plt.figure(figsize=(18,9))
-plt.subplot(121)
-plt.imshow(d)
-plt.colorbar()
-plt.title('distance to flake center')
-plt.subplot(122)
-plt.imshow(idx)
-plt.colorbar()
-plt.title('flake index')
-plt.savefig('pdsample_%.3f_%d.png' % (_r,seed), bbox_inches='tight')
-plt.show()
+d = d[10:10+res, 10:10+res]
+# print('d shape:', np.array(d).max())
+d = np.array(d)
+d = np.clip(d, a_min=6,a_max=20)
+d = (d-d.min()+2)/(d.max()-d.min()+2)
+Image.fromarray(np.uint8((1-d)*255)).save('out.png')
+
+
+# print(idx.min())
+# plt.figure(figsize=(18,9))
+# plt.subplot(121)
+# plt.imshow(d)
+# plt.colorbar()
+# plt.title('distance to flake center')
+# plt.subplot(122)
+# plt.imshow(idx)
+# plt.colorbar()
+# plt.title('flake index')
+# plt.savefig('pdsample_%.3f_%d.png' % (_r,seed), bbox_inches='tight')
+# plt.show()

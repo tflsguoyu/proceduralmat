@@ -1,0 +1,131 @@
+2020-04-17 13:56:18 INFO  main [mitsuba.cpp:275] Mitsuba version 0.6.0 (Linux, 64 bit), Copyright (c) 2017 Wenzel Jakob
+2020-04-17 13:56:18 INFO  main [mitsuba.cpp:377] Parsing scene description from "teaser.xml" ..
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/path.so" ..
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/ldsampler.so" ..
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/gaussian.so" ..
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/hdrfilm.so" ..
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/perspective.so" ..
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/envmap.so" ..
+2020-04-17 13:56:18 INFO  main [EnvironmentMap] Loading environment map "env.exr"
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/lanczos.so" ..
+2020-04-17 13:56:18 INFO  main [EnvironmentMap] Precomputing data structures for environment map sampling (2.0 MiB)
+2020-04-17 13:56:18 INFO  main [EnvironmentMap] Done (took 2 ms)
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/area.so" ..
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/diffuse.so" ..
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/sphere.so" ..
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/bitmap.so" ..
+2020-04-17 13:56:18 INFO  main [BitmapTexture] Loading texture "check.jpg"
+2020-04-17 13:56:18 INFO  main [PluginManager] Loading plugin "plugins/roughplastic.so" ..
+2020-04-17 13:56:18 INFO  main [BitmapTexture] Loading texture "normal.exr"
+2020-04-17 13:56:18 INFO  main [BitmapTexture] Loading texture "rough.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "albedo.exr"
+2020-04-17 13:56:19 INFO  main [PluginManager] Loading plugin "plugins/normalmap.so" ..
+2020-04-17 13:56:19 INFO  main [PluginManager] Loading plugin "plugins/twosided.so" ..
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "normal.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "rough.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "albedo.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "normal.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "roughx.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "roughy.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "f0.exr"
+2020-04-17 13:56:19 INFO  main [PluginManager] Loading plugin "plugins/roughconductor.so" ..
+2020-04-17 13:56:19 INFO  main [spectrum.cpp:601] "Al.eta.spd": loaded a spectral power distribution with 56 entries (between 298.757050 and 885.601257 nm)
+2020-04-17 13:56:19 INFO  main [spectrum.cpp:601] "Al.k.spd": loaded a spectral power distribution with 56 entries (between 298.757050 and 885.601257 nm)
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "normal.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "rough.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "albedo.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "normal.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "rough.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "albedo.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "normal_flake.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "rough_flake.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "f0_flake.exr"
+2020-04-17 13:56:19 INFO  main [spectrum.cpp:601] "Al.eta.spd": loaded a spectral power distribution with 56 entries (between 298.757050 and 885.601257 nm)
+2020-04-17 13:56:19 INFO  main [spectrum.cpp:601] "Al.k.spd": loaded a spectral power distribution with 56 entries (between 298.757050 and 885.601257 nm)
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "rough_top.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "albedo.exr"
+2020-04-17 13:56:19 INFO  main [PluginManager] Loading plugin "plugins/mixturebsdf.so" ..
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "normal_flake.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "rough_flake.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "f0_flake.exr"
+2020-04-17 13:56:19 INFO  main [spectrum.cpp:601] "Al.eta.spd": loaded a spectral power distribution with 56 entries (between 298.757050 and 885.601257 nm)
+2020-04-17 13:56:19 INFO  main [spectrum.cpp:601] "Al.k.spd": loaded a spectral power distribution with 56 entries (between 298.757050 and 885.601257 nm)
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "rough_top.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "albedo.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "normal_flake.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "rough_flake.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "f0_flake.exr"
+2020-04-17 13:56:19 INFO  main [spectrum.cpp:601] "Al.eta.spd": loaded a spectral power distribution with 56 entries (between 298.757050 and 885.601257 nm)
+2020-04-17 13:56:19 INFO  main [spectrum.cpp:601] "Al.k.spd": loaded a spectral power distribution with 56 entries (between 298.757050 and 885.601257 nm)
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "rough_top.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "albedo.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "normal.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "rough.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "albedo.exr"
+2020-04-17 13:56:19 INFO  main [BitmapTexture] Loading texture "normal.exr"
+2020-04-17 13:56:20 INFO  main [BitmapTexture] Loading texture "rough.exr"
+2020-04-17 13:56:20 INFO  main [BitmapTexture] Loading texture "albedo.exr"
+2020-04-17 13:56:20 INFO  main [BitmapTexture] Loading texture "normal.exr"
+2020-04-17 13:56:20 INFO  main [BitmapTexture] Loading texture "rough.exr"
+2020-04-17 13:56:20 INFO  main [BitmapTexture] Loading texture "albedo.exr"
+2020-04-17 13:56:20 INFO  main [PluginManager] Loading plugin "plugins/ply.so" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_1.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_1": Loaded 43779 triangles, 22202 vertices (1.2 MiB in 9 ms).
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_2.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_2": Loaded 39600 triangles, 20200 vertices (1.1 MiB in 8 ms).
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_3.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_3": Loaded 39402 triangles, 20000 vertices (1.1 MiB in 8 ms).
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_4.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_4": Loaded 39600 triangles, 20200 vertices (1.1 MiB in 8 ms).
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_5.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_5": Loaded 36 triangles, 62 vertices (2.4 KiB in 0 ms).
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_6.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_6": Loaded 12 triangles, 24 vertices (912 B in 0 ms).
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_7.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_7": Loaded 49344 triangles, 25394 vertices (1.3 MiB in 10 ms).
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_8.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_8": Loaded 26496 triangles, 14373 vertices (759.7 KiB in 5 ms).
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_9.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_9": Loaded 64413 triangles, 128847 vertices (4.7 MiB in 37 ms).
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_10.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_10": Loaded 5216 triangles, 10432 vertices (387.1 KiB in 2 ms).
+2020-04-17 13:56:20 INFO  main [PLYLoader] Loading geometry from "model_11.ply" ..
+2020-04-17 13:56:20 INFO  main [PLYLoader] "model_11": Loaded 1536 triangles, 3072 vertices (114.0 KiB in 0 ms).
+2020-04-17 13:56:20 INFO  ren0 [KDTreeBase] Constructing a SAH kd-tree (309435 primitives) ..
+2020-04-17 13:56:20 INFO  ren0 [KDTreeBase] Finished -- took 637 ms.
+2020-04-17 13:56:20 INFO  ren0 [SamplingIntegrator] Starting render job (256x256, 256 samples, 12 cores, SSE2 enabled) ..
+2020-04-17 13:56:32 INFO  ren0 [RenderJob] Render time: 12.6050s
+2020-04-17 13:56:32 INFO  ren0 [HDRFilm] Writing image to "/home/guoyu/Documents/2_bayesian/bayesian/teaser/3/teaser.exr" ..
+2020-04-17 13:56:32 INFO  main [statistics.cpp:142] Statistics:
+------------------------------------------------------------
+ * Loaded plugins :
+    -  plugins/area.so [Area light]
+    -  plugins/bitmap.so [Bitmap texture]
+    -  plugins/diffuse.so [Smooth diffuse BRDF]
+    -  plugins/envmap.so [Environment map]
+    -  plugins/gaussian.so [Gaussian reconstruction filter]
+    -  plugins/hdrfilm.so [High dynamic range film]
+    -  plugins/lanczos.so [Lanczos Sinc filter]
+    -  plugins/ldsampler.so [Low discrepancy sampler]
+    -  plugins/mixturebsdf.so [Mixture BSDF]
+    -  plugins/normalmap.so [Normal map modifier]
+    -  plugins/path.so [MI path tracer]
+    -  plugins/perspective.so [Perspective camera]
+    -  plugins/ply.so [PLY mesh loader]
+    -  plugins/roughconductor.so [Rough conductor BRDF]
+    -  plugins/roughplastic.so [Rough plastic BRDF]
+    -  plugins/sphere.so [Sphere intersection primitive]
+    -  plugins/twosided.so [Two-sided BRDF adapter]
+
+  * General :
+    -  Normal rays traced : 38.496 M
+    -  Shadow rays traced : 21.813 M
+
+  * Path tracer :
+    -  Average path length : 1.31 (21.94 M / 16.78 M)
+
+  * Texture system :
+    -  Cumulative MIP map memory allocations : 267.651 MiB
+    -  Filtered texture lookups : 53.09 % (106.74 M of 201.06 M)
+    -  Lookups with clamped anisotropy : 0.00 % (0.00 of 106.74 M)
+------------------------------------------------------------
