@@ -39,8 +39,8 @@ class Wood(Material):
                                  [0.3, 0.2, 0, 1],         # gdn_scale
                                  [0.5, 0.3, 0, 2],         # gdn_amplitude
                                  [5, 10,  -90,   90],         # cut_angle
-                                 [0.8, 0.1, 0.1, 0.8],     # rough
-                                 [0.8, 0.05, 0.01, 0.8],       # ew_rough
+                                 [0.7, 0.1, 0.1, 0.8],     # rough
+                                 [0.7, 0.05, 0.01, 0.8],       # ew_rough
                                  [0.005, 0.002, 0, 0.01],   # lw_height
                                  [ 15,   2,   0,  20]  # iSigma
                                  ], dtype=th.float32, device=device)
@@ -65,7 +65,7 @@ class Wood(Material):
         return right, up
 
     def eval_render(self, x=None):
-        th.autograd.set_detect_anomaly(True)
+        # th.autograd.set_detect_anomaly(True)
         light, albedo, center, ring_size, lw_power, lw_fraction, ew_ramp_width, lw_ramp_width, ssn_scale, ssn_power, grn_scale, grn_amplitude, gdn_scale, gdn_amplitude, cut_angle, rough, ew_rough, lw_height, iSigma = self.unpack(x)
 
         s = self.size / 2

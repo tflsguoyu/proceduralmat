@@ -38,7 +38,7 @@ class Leather(Material):
 
     def resizedCenterCrop(self, I0, s, t, n):
         n0 = I0.size()[0]
-        if self.op == 'generate':
+        if self.op == 'generate' or self.op == 'train':
             I0 = I0.roll(np.random.randint(n0),0)
             I0 = I0.roll(np.random.randint(n0),1)
             if np.random.rand() > 0.5:

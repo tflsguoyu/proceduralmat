@@ -4,7 +4,6 @@ class Bump(Material):
     def __init__(self, args, device):
         print('Initial Class forward::Bump()')
         super().__init__(args, device)
-        self.op = args.operation
         self.save_tex = args.save_tex
         self.f0 = 0.04
         self.paraPr = th.tensor([[1500,400,   0,2500], # light
@@ -18,8 +17,6 @@ class Bump(Material):
                                  ], dtype=th.float32, device=device)
         self.paraCh = [1,3,1,1,1,1]
         self.paraNm = ['light','albedo','rough','fsigma','fscale','iSigma']
-        if not self.op == 'sample':
-            self.initPhase()
 
     def initPhase(self):
         self.sizePerPixel = float(self.size) / self.n
@@ -30,8 +27,7 @@ class Bump(Material):
         self.yF, self.xF = th.meshgrid((vF, vF))
 
     def computeBumpNormal(self, fsigma, fscale):
-        if self.op == 'sample':
-            self.initPhase()
+        self.initPhase()
 
         amp = (-0.5 * ((self.xF/fsigma).pow(2.0) + (-self.yF/fsigma).pow(2.0))).exp()
         amp = gyShift(amp*fscale)

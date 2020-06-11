@@ -30,7 +30,6 @@ class Metal(Material):
         #                          ], dtype=th.float32, device=device)
         self.paraCh = [1,3,1,1,1,1,1,1]
         self.paraNm = ['light','f0','roughx','roughy','fsigmax','fsigmay','fscale','iSigma']
-        self.initPhase()
 
     def initPhase(self):
         self.sizePerPixel = float(self.size) / self.n
@@ -50,6 +49,7 @@ class Metal(Material):
         return gyDstack(D / (4 * (n_dot_h**2).clamp(eps,1)), f0)
 
     def computeBumpNormal(self, fsigmax, fsigmay, fscale):
+        self.initPhase()
         amp = (-0.5 * ((self.xF/fsigmax.clamp(min=eps)).pow(2.0) + (-self.yF/fsigmay.clamp(min=eps)).pow(2.0))).exp()
         amp = gyShift(amp*fscale)
         profile = th.stack((amp*th.cos(self.phase), amp*th.sin(self.phase)), 2)
