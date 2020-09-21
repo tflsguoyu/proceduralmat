@@ -1,14 +1,14 @@
 # light, albedo(r,g,b), topF0, topRough, flakeF0(r,g,b), flakeRough, flakeNDF, flakeSize, iSigma
 
 # generate
-python src/bayesian.py \
-	--forward flake \
-	--operation generate \
-	--size 15 \
-	--imres 1024 \
-	--save_tex yes \
-	--out_dir in/real_estimate/2_flake_real1/ \
-	--para_all 1194.088 0.129 0.142 0.127 0.032 0.101 0.04 0.04 0.04 0.171 0.30 1 0.000 0.000 11.909
+# python src/bayesian.py \
+# 	--forward flake \
+# 	--operation generate \
+# 	--size 15 \
+# 	--imres 1024 \
+# 	--save_tex yes \
+# 	--out_dir in/real_estimate/2_flake_real1/ \
+# 	--para_all 1194.088 0.129 0.142 0.127 0.032 0.101 0.04 0.04 0.04 0.171 0.30 1 0.000 0.000 11.909
 	# --para_all 1782.909 0.774 0.003 0.037 0.042 0.174 0.496 0.044 0.030 0.398 0.380 0.864 0.291 0.649 16.416 # real2
 
 	# --para_all 1200 0.72 0.05 0.61 0.04 0.3 0.6 0.3 0.1 0.16 0.5 0.35 0 0 10 # flake 2
@@ -32,17 +32,17 @@ python src/bayesian.py \
 # 	--para_all 1782.909 0.774 0.003 0.037 0.042 0.174 0.496 0.044 0.030 0.398 0.380 0.864 0.291 0.649 16.416
 
 ### optim
-# python src/bayesian.py \
-# 	--forward flake \
-# 	--operation optimize \
-# 	--in_dir in/4_flake_real2/ \
-# 	--out_dir out/4_flake_real2_optim2/ \
-# 	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 \
-# 	--epochs 1000 \
-# 	--imres 1024 \
-# 	--lr 0.05 \
-# 	--to_save fig \
-# 	--size 15
+python src/bayesian.py \
+	--forward flake \
+	--operation optimize \
+	--in_dir in/real/6_wood_real3/ \
+	--out_dir out_tmp/6_wood_real3_optim_flake/ \
+	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 \
+	--epochs 1000 \
+	--imres 256 \
+	--size 15 \
+	--lr 0.05 \
+	--save_tex yes
 
 # sample
 # python3 src/demo.py --in_dir in/flake/ --out_dir out/flake/hmc/1/ --forward flake --operation sample --fn 1.png --para_all 720.772 0.089 0.000 0.804 0.045 0.115 0.000 0.512 0.371 0.260 0.497 0.481 0 0 8.381 --para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 --epochs 5001 --lf_lens 0.01 --lf_steps 4

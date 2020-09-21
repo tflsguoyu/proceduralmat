@@ -79,7 +79,7 @@ class Plaster(Material):
         img = img.clamp(0,1).pow(1/2.2)
 
         if self.save_tex == 'yes':
-            self.albedo_tex = dstack(th.ones_like(geom_noise), albedo)
+            self.albedo_tex = gyDstack(th.ones_like(geom_noise), albedo)
             self.normal_tex = normal_noise
             self.rough_tex = rough
 

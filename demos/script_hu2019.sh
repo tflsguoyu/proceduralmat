@@ -68,29 +68,30 @@
 # 	--para     0 0 0 0 0 0 0 0 0 0 \
 # 	# --resume hu2019/out/bump/checkpoint_0050.pth
 
-python src/hu2019.py \
-	--in_dir hu2019/in/real/ \
-	--out_dir hu2019/out/wood/ \
-	--forward wood \
-	--operation train \
-	--epochs 100 \
-	--iters_train 800 \
-	--iters_val 200 \
-	--lr 0.0001 \
-	--cuda \
-	--para_idx 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 \
-	--para     0 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0 \
-	# --resume hu2019/out/wood/checkpoint_0100.pth
-
 # python src/hu2019.py \
-# 	--in_dir hu2019/in/real/bump_2/target.jpg \
-# 	--out_dir hu2019/out/bump/ \
-# 	--forward bump \
-# 	--operation test \
+# 	--in_dir hu2019/in/real/ \
+# 	--out_dir hu2019/out/wood/ \
+# 	--forward wood \
+# 	--operation train \
+# 	--epochs 100 \
+# 	--iters_train 800 \
+# 	--iters_val 200 \
+# 	--lr 0.0001 \
 # 	--cuda \
-# 	--para_idx 0 1 2 3 4 5 6 7 \
-# 	--para     0 0 0 0 0 0 0 0 \
-# 	--resume hu2019/out/bump/checkpoint_0100.pth
+# 	--para_idx 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 \
+# 	--para     0 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0 \
+# 	# --resume hu2019/out/wood/checkpoint_0095.pth
+
+python src/hu2019.py \
+	--in_dir hu2019/in/1_bump_syn0/input.png \
+	--out_dir hu2019/out/bump/ \
+	--forward bump \
+	--operation test \
+	--cuda \
+	--para_idx 0 1 2 3 4 5 6 7 \
+	--para     0 0 0 0 0 0 0 0 \
+	--resume hu2019/out/bump/checkpoint_0100.pth
+	# --in_dir hu2019/in/1_bump_syn0/input.png \
 
 # python src/hu2019.py \
 # 	--in_dir hu2019/in/real/flake_2/target.jpg \
@@ -133,7 +134,7 @@ python src/hu2019.py \
 # 	--resume hu2019/out/plaster/checkpoint_0100.pth
 
 # python src/hu2019.py \
-# 	--in_dir hu2019/in/real/wood_3/target.jpg \
+# 	--in_dir hu2019/in/real/wood_1/target.jpg \
 # 	--out_dir hu2019/out/wood/ \
 # 	--forward wood \
 # 	--operation test \

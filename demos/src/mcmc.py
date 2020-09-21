@@ -217,34 +217,34 @@ class MCMCsample:
         self.forwardObj = forwardObj
         self.sumfuncObj = sumfuncObj
 
-    def plot(self):
-        if len(xs)%1000==0:
-            now = datetime.now(); print(now)
-            if self.usePrior:
-                print('%d/%d, lpdf: %f, %f' % (len(xs), N, lpdf.item(), self.forwardObj.eval_prior_lpdf(x0).item()))
-            else:
-                print('%d/%d, lpdf: %f' % (len(xs), N, lpdf.item()))
-            print('rejection rate: %f'
-                % (self.num_reject/(self.num_reject + len(xs) - 1)))
-            # print(t**-self.c1)
-            # print('Sigma2:', sigma2.cpu().numpy())
+    # def plot(self):
+    #     if len(xs)%1000==0:
+    #         now = datetime.now(); print(now)
+    #         if self.usePrior:
+    #             print('%d/%d, lpdf: %f, %f' % (len(xs), N, lpdf.item(), self.forwardObj.eval_prior_lpdf(x0).item()))
+    #         else:
+    #             print('%d/%d, lpdf: %f' % (len(xs), N, lpdf.item()))
+    #         print('rejection rate: %f'
+    #             % (self.num_reject/(self.num_reject + len(xs) - 1)))
+    #         # print(t**-self.c1)
+    #         # print('Sigma2:', sigma2.cpu().numpy())
 
-            xs_arr = np.vstack(xs)
-            lpdfs_arr = np.vstack(lpdfs)
-            id = np.vstack(np.arange(len(lpdfs))+1)
-            np.savetxt(os.path.join(self.dir, 'sample.csv'),
-                np.concatenate((id, lpdfs_arr, xs_arr), 1),
-                delimiter=",", fmt='%.3f')
+    #         xs_arr = np.vstack(xs)
+    #         lpdfs_arr = np.vstack(lpdfs)
+    #         id = np.vstack(np.arange(len(lpdfs))+1)
+    #         np.savetxt(os.path.join(self.dir, 'sample.csv'),
+    #             np.concatenate((id, lpdfs_arr, xs_arr), 1),
+    #             delimiter=",", fmt='%.3f')
 
-            if self.to_save == 'fig':
-                plotFigure(self.dir,
-                    np.vstack(lpdfs),
-                    xs,
-                    img.detach().cpu().numpy(),
-                    self.sumfuncObj.target.cpu().numpy(),
-                    len(xs),
-                    self.num_reject,
-                    time.time()-time_start)
+    #         if self.to_save == 'fig':
+    #             plotFigure(self.dir,
+    #                 np.vstack(lpdfs),
+    #                 xs,
+    #                 img.detach().cpu().numpy(),
+    #                 self.sumfuncObj.target.cpu().numpy(),
+    #                 len(xs),
+    #                 self.num_reject,
+    #                 time.time()-time_start)
 
 
     def U(self, x):
@@ -315,7 +315,9 @@ class MCMCsample:
             else:
                 self.num_reject += 1
 
-        print('N=', self.N)
+        print('accept:%d, reject:%d, accept rate:%.2f%%' % \
+            (self.num_accept, self.num_reject, self.num_accept*100/max(1,self.N)))
+        print('Best parameters so far: ', best_para)
 
         plotFigure(self.dir,
             np.vstack(lpdfs),

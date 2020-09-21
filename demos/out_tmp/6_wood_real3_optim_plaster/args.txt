@@ -1,0 +1,33 @@
+{
+  "in_dir": "in/real/6_wood_real3/",
+  "out_dir": "out_tmp/6_wood_real3_optim_plaster/",
+  "forward": "plaster",
+  "size": 5.0,
+  "camera": 25,
+  "para_all": null,
+  "operation": "optimize",
+  "mcmc": "HMC",
+  "imres": 256,
+  "para_eval_idx": [
+    0,
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "sum_func": "T_G",
+  "err_sigma": null,
+  "epochs": 1001,
+  "lf_lens": 0.04,
+  "lf_steps": 4,
+  "lr": 0.01,
+  "to_save": null,
+  "save_tex": "yes",
+  "useFFT": false
+}

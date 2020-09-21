@@ -1,14 +1,14 @@
 #  light, albedo, rough, rough_var, height, power, scale, shiftx, shifty, iSigma
 
 # generate
-python src/bayesian.py \
-	--forward leather \
-	--operation generate \
-	--out_dir in/real_estimate/2_leather_real1/ \
-	--imres 1024\
-	--size 10 \
-	--save_tex yes \
-	--para_all 1705.436 0.028 0.024 0.035 0.257 0.088 0.888 0.010 0.632 0.018 0.120 0.282 5.893 # leather real 3
+# python src/bayesian.py \
+# 	--forward leather \
+# 	--operation generate \
+# 	--out_dir in/real_estimate/2_leather_real1/ \
+# 	--imres 1024\
+# 	--size 10 \
+# 	--save_tex yes \
+# 	--para_all 1705.436 0.028 0.024 0.035 0.257 0.088 0.888 0.010 0.632 0.018 0.120 0.282 5.893 # leather real 3
 
 # sample
 # python src/bayesian.py \
@@ -28,16 +28,17 @@ python src/bayesian.py \
 	# --para_all 1750.453 0.245 0.003 0.002 0.264 0.024 0.038 0.305 0.933 0.009 -0.097 -0.373 14.202 # leather 2
 	# --para_all 1552.595 0.697 0.304 0.003 0.317 0.063 0.098 0.451 0.420 0.035 -0.300 -0.135 15.573 # leather 3
 # optimize
-# python src/bayesian.py \
-# 	--forward leather \
-# 	--operation optimize \
-# 	--in_dir in/real/2_leather_real1/ \
-# 	--out_dir out/2_leather_real1_optim1/ \
-# 	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 12 \
-# 	--epochs 1000 \
-# 	--imres 512 \
-# 	--lr 0.05 \
-# 	--to_save fig
+python src/bayesian.py \
+	--forward leather \
+	--operation optimize \
+	--in_dir in/real/6_wood_real3/ \
+	--out_dir out_tmp/6_wood_real3_optim_leather/ \
+	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 12 \
+	--epochs 1000 \
+	--imres 256 \
+	--size 5 \
+	--lr 0.05 \
+	--save_tex yes
 
 # python3 src/demo.py --in_dir in/leather/ --out_dir out/leather/hmc/2/ --forward leather --operation sample --fn 2.png --para_all 999 0.4 0.4 0.4 0.3 0.2 0.2 2 0.3 0 0 10 --para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 --epochs 5001  --lf_lens 0.01 --lf_steps 4
 

@@ -14,31 +14,32 @@
 	# --para_all 1500 0.558 0.279 0.101 -5.674 -11.015 2.614 0.603 2.364 0.448 0.170 0.289 11.924 0.523 0.707 0.209 0.000 0.449 6.338 0.32 0.12 0.007 10
 
 
-python src/bayesian.py \
-	--forward wood \
-	--operation sample \
-	--in_dir in/real/6_wood_real3/ \
-	--out_dir out/6_wood_real3_2/ \
-	--mcmc MALA \
-	--para_all 2256.804 0.803 0.650 0.416 -2.794 -1.679 0.000 0.105 1.593 0.300 0.311 0.120 10.798 0.159 0.589 0.424 0.366 0.697 5.171 0.8 0.8 0.006 14.731 \
-	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 21 22 \
-	--epochs 1000 \
-	--lr 0.0001 \
-	--to_save fig \
-	--imres 256 \
-	--size 5
-
 # python src/bayesian.py \
 # 	--forward wood \
-# 	--operation optimize \
+# 	--operation sample \
 # 	--in_dir in/real/6_wood_real3/ \
-# 	--out_dir out/6_wood_real3_optim2/ \
+# 	--out_dir out/6_wood_real3_2/ \
+# 	--mcmc MALA \
+# 	--para_all 2256.804 0.803 0.650 0.416 -2.794 -1.679 0.000 0.105 1.593 0.300 0.311 0.120 10.798 0.159 0.589 0.424 0.366 0.697 5.171 0.8 0.8 0.006 14.731 \
 # 	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 21 22 \
 # 	--epochs 1000 \
-# 	--imres 256 \
-# 	--lr 0.01 \
+# 	--lr 0.0001 \
 # 	--to_save fig \
+# 	--imres 256 \
 # 	--size 5
+
+python src/bayesian.py \
+	--forward wood \
+	--operation optimize \
+	--in_dir in/real/2_leather_real3/ \
+	--out_dir out_tmp/2_leather_real3_optim/ \
+	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 21 22 \
+	--epochs 1000 \
+	--imres 256 \
+	--size 20 \
+	--lr 0.01 \
+	--save_tex yes
+	# --to_save fig \
 
 # --para_all 2246.053 0.843 0.632 0.372 -12.966 -1.375 0.000 0.493 1.382 0.390 0.228 0.228 9.649 0.217 0.589 0.528 0.270 0.474 13.522 0.8 0.8 0.004 16.727 \
 	

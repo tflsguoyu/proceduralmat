@@ -12,30 +12,31 @@
 
 
 # sample
-python src/bayesian.py \
-	--in_dir in/3_plaster_real2/ \
-	--out_dir out/3_plaster_real2/ \
-	--forward plaster \
-	--operation sample \
-	--mcmc MALA \
-	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 \
-	--epochs 100 \
-	--lr 0.005 \
-	--to_save fig \
-	--imres 256 \
-	--para_all 1948.993 0.824 0.760 0.774 0.79 0.208 0.308 2.142 0.888 0.007 -0.038 17.460
-
-### optim
 # python src/bayesian.py \
+# 	--in_dir in/real/6_wood_real3/ \
+# 	--out_dir out_tmp/6_wood_real3_optim_plaster/ \
 # 	--forward plaster \
-# 	--operation optimize \
-# 	--in_dir in/3_plaster_real2/ \
-# 	--out_dir out/3_plaster_real2_optim1/ \
-# 	--para_eval_idx 0 1 2 3 5 6 7 8 9 10 11 \
-# 	--epochs 1001 \
-# 	--imres 256 \
-# 	--lr 0.01 \
+# 	--operation sample \
+# 	--mcmc MALA \
+# 	--para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 \
+# 	--epochs 100 \
+# 	--lr 0.005 \
 # 	--to_save fig \
+# 	--imres 256 \
+# 	--para_all 1948.993 0.824 0.760 0.774 0.79 0.208 0.308 2.142 0.888 0.007 -0.038 17.460
+
+## optim
+python src/bayesian.py \
+	--forward plaster \
+	--operation optimize \
+	--in_dir in/real/6_wood_real3/ \
+	--out_dir out_tmp/6_wood_real3_optim_plaster/ \
+	--para_eval_idx 0 1 2 3 5 6 7 8 9 10 11 \
+	--epochs 1001 \
+	--imres 256 \
+	--size 5 \
+	--lr 0.01 \
+	--save_tex yes
 
 # python3 src/demo.py --in_dir in/plaster --out_dir out/plaster/hmc/2/ --forward plaster --operation sample --fn 2.png --para_all 999 0.4 0.4 0.4 0.4 0.2 0.2 3 0.5 0 0 10 --para_eval_idx 0 1 2 3 4 5 6 7 8 9 10 11 --epochs 5001 --lf_lens 0.01 --lf_steps 4
 

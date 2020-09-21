@@ -101,6 +101,7 @@ class Material:
             paraList.append(para[i:i+d])
             i += d
 
+        # print(paraList)
         return paraList
 
     def eval_prior_lpdf(self, y):
