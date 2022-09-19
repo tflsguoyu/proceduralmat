@@ -5,7 +5,7 @@ In Computer Graphics Forum (Pacific Graphics 2020).
 
 <img src="https://github.com/tflsguoyu/proceduralmat_suppl/blob/master/github/teaser.jpg" width="750px">
 
-[Paper](https://github.com/tflsguoyu/proceduralmat_paper/blob/master/proceduralmat.pdf)
+[[Paper](https://github.com/tflsguoyu/proceduralmat_paper/blob/master/proceduralmat.pdf)]
 [Code](https://github.com/tflsguoyu/proceduralmat/)
 [Supplemental Materials](https://tflsguoyu.github.io/proceduralmat_suppl/)
 [Poster](https://github.com/tflsguoyu/proceduralmat_poster/blob/master/proceduralmat_poster.pdf)
