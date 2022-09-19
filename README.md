@@ -25,5 +25,6 @@ In this repository, it provides procedural model generation demo code, sampling 
 ## Examples in paper
 
 ## Notes
- - This is an uncleaned version, only the code in `procedural_model_test` are available to use.  
+ - 09/19/2022: This is an uncleaned version, only the code in `procedural_model_test` are available to use.  
+ - 09/19/2022: TODO: Clean up codes.
  - Welcome to report bugs and leave comments (Yu Guo: tflsguoyu@gmail.com)
