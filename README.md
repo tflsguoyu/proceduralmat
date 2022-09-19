@@ -3,7 +3,7 @@
 [Yu Guo](https://tflsguoyu.github.io/), [Miloš Hašan](http://miloshasan.net/), [Lingqi Yan](https://sites.cs.ucsb.edu/~lingqi/), [Shuang Zhao](https://shuangz.com/). 
 In Computer Graphics Forum (Pacific Graphics 2020). 
 
-<img src="" width="500px">
+<img src="https://github.com/tflsguoyu/proceduralmat_suppl/blob/master/github/teaser.jpg" width="500px">
 
 ## Overview
 In this repository, it provides procedural model generation demo code, sampling demo code, and the code to generate the results in this paper. 
