@@ -10,7 +10,7 @@ In Computer Graphics Forum (Pacific Graphics 2020).
 [[Code](https://github.com/tflsguoyu/proceduralmat/)]
 [[Supplemental Materials](https://tflsguoyu.github.io/proceduralmat_suppl/)]
 [[Poster](https://github.com/tflsguoyu/proceduralmat_poster/blob/master/proceduralmat_poster.pdf)]
-[Presentation on Pacific Graphics 2020] ([Video](https://youtu.be/fQPBqHKJmWQ)[Slides](https://www.dropbox.com/s/aidtlb5v8b1rhtk/proceduralmat.pptx?dl=0))]
+[Presentation on Pacific Graphics 2020] ([Video](https://youtu.be/fQPBqHKJmWQ))([Slides](https://www.dropbox.com/s/aidtlb5v8b1rhtk/proceduralmat.pptx?dl=0))]
 
 ## Overview
 In this repository, it provides procedural model generation demo code, sampling demo code, and the code to generate the results in this paper. 
